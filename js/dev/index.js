@@ -28,3 +28,43 @@ import "./common.min.js";
     fetch(link.href, fetchOpts);
   }
 })();
+function updateAboutCards() {
+  document.querySelectorAll(".item-about").forEach((card) => {
+    const image = card.querySelector(".item-about__image");
+    const content = card.querySelector(".item-about__content");
+    const text = card.querySelector(".item-about__text");
+    if (!image || !content || !text) return;
+    const prevMaxHeight = text.style.maxHeight;
+    const prevOpacity = text.style.opacity;
+    text.style.maxHeight = "none";
+    text.style.opacity = "1";
+    const fullTextHeight = text.scrollHeight;
+    text.style.maxHeight = prevMaxHeight;
+    text.style.opacity = prevOpacity;
+    const textPaddingTop = parseFloat(getComputedStyle(text).paddingTop) || 0;
+    const closedContentHeight = content.offsetHeight - textPaddingTop;
+    card.style.setProperty("--opened-text-height", `${fullTextHeight}px`);
+    card.style.setProperty("--content-closed-height", `${closedContentHeight}px`);
+  });
+}
+window.addEventListener("load", updateAboutCards);
+window.addEventListener("resize", updateAboutCards);
+const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+if (isTouch) {
+  document.documentElement.classList.add("touch");
+  const cards = document.querySelectorAll(".item-about");
+  cards.forEach((card) => {
+    card.addEventListener("click", (e) => {
+      const isOpen = card.classList.contains("is-open");
+      cards.forEach((c) => c.classList.remove("is-open"));
+      if (!isOpen) {
+        card.classList.add("is-open");
+      }
+    });
+  });
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".item-about")) {
+      cards.forEach((c) => c.classList.remove("is-open"));
+    }
+  });
+}
