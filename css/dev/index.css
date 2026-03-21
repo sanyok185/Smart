@@ -369,10 +369,10 @@ html.touch .item-about.is-open .item-about__image {
     min-height: 4.375rem;
   }
   .block-about__items--1 .item-about {
-    min-height: 16.875rem;
+    min-height: 15.625rem;
   }
   .item-about {
-    min-height: 17.5rem;
+    min-height: 15.625rem;
   }
 }@media (max-width: 35em) {
   .block-about__items {
@@ -385,6 +385,7 @@ html.touch .item-about.is-open .item-about__image {
 }@media (max-width: 29.99875em) {
   .header__button {
     width: 100%;
+    padding: 1.25rem 3rem;
   }
 }@media (width <= 20em) {
   .block-about {
