@@ -74,6 +74,9 @@ document.addEventListener("formSent", function(e) {
   currentForm.style.display = "none";
   successMessage.style.display = "flex";
 });
+window.addEventListener("load", () => {
+  document.documentElement.classList.add("loaded");
+});
 let formValidate = {
   getErrors(form) {
     let error = 0;
