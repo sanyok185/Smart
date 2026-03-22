@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="assets/img/favicon.ico">
 		<title>Kolo.TB - Smart</title>
-		<script type="module" crossorigin="" src="./js/index.min.js?v=1774160004875"></script>
-		<link rel="modulepreload" crossorigin="" href="./js/common.min.js?v=1774160004875">
-		<link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1774160004875">
+		<script type="module" crossorigin="" src="./js/index.min.js?v=1774211678817"></script>
+		<link rel="modulepreload" crossorigin="" href="./js/common.min.js?v=1774211678817">
+		<link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1774211678817">
 	</head>
 	<body>
 		<div class="wrapper">
@@ -17,12 +17,14 @@
 				</video>
 				<div class="header__container">
 					<div class="header__layout">
-						<div class="header__visual">
+						<div class="header__visual" data-fls-watcher="">
 							<img src="./assets/img/logo.svg" alt="Logo" class="header__logo">
 							<img src="./assets/img/logo_smart.svg" alt="Logo" class="header__logo-smart">
 						</div>
-						<h1 class="header__title">Пакет розширених можливостей до твого тарифу інтернет</h1>
-						<a href="#" data-fls-button="" class="header__button">Додати пакет</a>
+						<h1 class="header__title" data-fls-watcher="">Пакет розширених можливостей до твого тарифу інтернет</h1>
+						<div class="header__button-wrapper" data-fls-watcher="">
+							<a href="#" data-fls-button="" class="header__button">Додати пакет</a>
+						</div>
 					</div>
 				</div>
 			</header>
@@ -30,7 +32,19 @@
 				<div data-fls-index="" class="index">
 					<section class="about">
 						<div class="about__container">
-							<div class="about__block block-about block-about--first">
+							<div class="about__bg-wrapper">
+								<picture>
+									<source media="(max-width: 600px)" srcset="./assets/img/bg--big-600.webp" type="image/webp">
+									<source media="(max-width: 1200px)" srcset="./assets/img/bg--big-1200.webp" type="image/webp">
+									<img alt="Decorative" class="about__bg" src="./assets/img/bg--big.webp">
+								</picture>
+								<picture>
+									<source media="(max-width: 600px)" srcset="./assets/img/bg--big-600.webp" type="image/webp">
+									<source media="(max-width: 1200px)" srcset="./assets/img/bg--big-1200.webp" type="image/webp">
+									<img alt="Decorative" class="about__bg" src="./assets/img/bg--big.webp">
+								</picture>
+							</div>
+							<div class="about__block block-about block-about--first" data-fls-watcher="">
 								<div class="block-about__header">
 									<div class="block-about__label">Що входить у пакет?</div>
 									<h2 class="block-about__title">1. Сервіс, що підлаштовується під вас</h2>
@@ -94,8 +108,8 @@
 											<h3 class="item-about__title">Інтернет у паркінгу</h3>
 											<p class="item-about__text">
 												Ми забезпечимо підключення інтернету на вашому
-									паркомісці для особистого користування, відеонагляду,
-									керування електрокаром чи зарядною станцією.
+								паркомісці для особистого користування, відеонагляду,
+								керування електрокаром чи зарядною станцією.
 												<br>
 												<small>
 													У послугу входить прокладання до 50 метрів кабелю до
@@ -106,7 +120,7 @@
 									</article>
 								</div>
 							</div>
-							<div class="about__block block-about">
+							<div class="about__block block-about" data-fls-watcher="">
 								<div class="block-about__header">
 									<div class="block-about__label">Що входить у пакет?</div>
 									<h2 class="block-about__title">2. Усе необхідне - без доплат</h2>
@@ -122,7 +136,9 @@
 										<div class="item-about__content">
 											<h3 class="item-about__title">Виклик майстра</h3>
 											<p class="item-about__text">
-												Безкоштовний виїзд спеціаліста для налаштування або ремонту обладнання. Професійна допомога без додаткових витрат.
+												Безкоштовний виїзд спеціаліста для налаштування або
+								ремонту обладнання. Професійна допомога без додаткових
+								витрат.
 											</p>
 										</div>
 									</article>
@@ -136,7 +152,8 @@
 										<div class="item-about__content">
 											<h3 class="item-about__title">Заміна обладнання</h3>
 											<p class="item-about__text">
-												Оперативна заміна несправного роутера або ТВ-приставки. Нове обладнання доставимо протягом 24 годин.
+												Оперативна заміна несправного роутера або ТВ-приставки.
+								Нове обладнання доставимо протягом 24 годин.
 											</p>
 										</div>
 									</article>
@@ -150,7 +167,9 @@
 										<div class="item-about__content">
 											<h3 class="item-about__title">Gaming Hub</h3>
 											<p class="item-about__text">
-												Доступ до бібліотеки ігор та низька затримка для комфортного онлайн-геймінгу. Створено для справжніх геймерів.
+												Доступ до бібліотеки ігор та низька затримка для
+								комфортного онлайн-геймінгу. Створено для справжніх
+								геймерів.
 											</p>
 										</div>
 									</article>
@@ -164,13 +183,14 @@
 										<div class="item-about__content">
 											<h3 class="item-about__title">MEGOGO SMART</h3>
 											<p class="item-about__text">
-												Преміум-підписка на стрімінговий сервіс з тисячами фільмів, серіалів та live-трансляціями спортивних подій.
+												Преміум-підписка на стрімінговий сервіс з тисячами
+								фільмів, серіалів та live-трансляціями спортивних подій.
 											</p>
 										</div>
 									</article>
 								</div>
 							</div>
-							<div class="about__block block-about block-about--third">
+							<div class="about__block block-about block-about--third" data-fls-watcher="">
 								<div class="block-about__header">
 									<div class="block-about__label">Що входить у пакет?</div>
 									<h2 class="block-about__title">3. менше витрат - більше користі</h2>
@@ -180,13 +200,16 @@
 										<div class="item-about__image">
 											<picture>
 												<source media="(max-width: 600px)" srcset="./assets/img/about_03_01-600.webp" type="image/webp">
-												<img alt="Image" style="object-position: 20% center;" src="./assets/img/about_03_01.webp">
+												<img alt="Image" style="object-position: 20% center" src="./assets/img/about_03_01.webp">
 											</picture>
 										</div>
 										<div class="item-about__content">
 											<h3 class="item-about__title">Ajax кешбек 10%</h3>
 											<p class="item-about__text">
-												Захист від проникнення, пожежі, потопу, а також відеонагляд та комфорт життя. Купуйте будь-яке обладнання Ajax у нас і отримуйте 10% вартості назад на свій рахунок послуги інтернет.
+												Захист від проникнення, пожежі, потопу, а також
+								відеонагляд та комфорт життя. Купуйте будь-яке
+								обладнання Ajax у нас і отримуйте 10% вартості назад на
+								свій рахунок послуги інтернет.
 											</p>
 										</div>
 									</article>
@@ -200,9 +223,11 @@
 										<div class="item-about__content">
 											<h3 class="item-about__title">Знижка 10% на обладнання</h3>
 											<p class="item-about__text">
-												Отримайте доступ до закритих цін інтернет магазину Коло.ТБ
+												Отримайте доступ до закритих цін інтернет магазину
+								Коло.ТБ
 												<br>
-												Купуйте роутери, ДБЖ, приставки та інше обладнання за спеціальною ціною із реальною вигодою
+												Купуйте роутери, ДБЖ, приставки та інше обладнання за
+								спеціальною ціною із реальною вигодою
 											</p>
 										</div>
 									</article>
@@ -210,14 +235,16 @@
 										<div class="item-about__image">
 											<picture>
 												<source media="(max-width: 600px)" srcset="./assets/img/about_03_03-600.webp" type="image/webp">
-												<img alt="Image" style="object-position: 20% center;" src="./assets/img/about_03_03.webp">
+												<img alt="Image" style="object-position: 20% center" src="./assets/img/about_03_03.webp">
 											</picture>
 										</div>
 										<div class="item-about__content">
 											<h3 class="item-about__title">Цілодобова охорона</h3>
 											<p class="item-about__text">
-												Відчуйте повну безпеку професійної охорони оселі від наших партнерів SHERIFF.
-								Послуга "Тривожна кнопка" за 149 0 гривен на місяць, сплачуйте тільки за реальний виклик.
+												Відчуйте повну безпеку професійної охорони оселі від
+								наших партнерів SHERIFF. Послуга "Тривожна кнопка" за
+								149 0 гривен на місяць, сплачуйте тільки за реальний
+								виклик.
 												<br>
 												<br>
 												<a href="#">Детальніше про послугу</a>
@@ -228,7 +255,7 @@
 							</div>
 						</div>
 					</section>
-					<section class="why">
+					<section class="why" data-fls-watcher="">
 						<div class="why__container">
 							<div class="why__content">
 								<h2 class="why__title">
@@ -238,18 +265,22 @@
 								</h2>
 								<div class="why__text">
 									<b>
-										Kolo.SMART — це не про розкіш, а про повагу до свого часу та спокою.
+										Kolo.SMART — це не про розкіш, а про повагу до свого часу та
+						спокою.
 										<br>
-										Це коли технології працюють непомітно, а проблеми вирішуються ще до того, як ти їх відчув.
+										Це коли технології працюють непомітно, а проблеми вирішуються
+						ще до того, як ти їх відчув.
 									</b>
 									<br>
 									<br>
 									<p>
-										Ми об’єднали розваги, безпеку та сервіс у єдину систему, щоб ти не збирав свій комфорт по частинах.
+										Ми об’єднали розваги, безпеку та сервіс у єдину систему, щоб
+						ти не збирав свій комфорт по частинах.
 									</p>
 									<p>
-										Це раціональний вибір того, хто хоче отримувати все й одразу, не переплачуючи за кожну дрібницю та маючи впевненість 
-						що  йому є на кого покластись.
+										Це раціональний вибір того, хто хоче отримувати все й одразу,
+						не переплачуючи за кожну дрібницю та маючи впевненість що йому
+						є на кого покластись.
 									</p>
 								</div>
 							</div>
@@ -257,7 +288,7 @@
 					</section>
 					<section class="tariff">
 						<div class="tariff__container">
-							<div class="tariff__table table-tariff">
+							<div class="tariff__table table-tariff" data-fls-watcher="">
 								<div class="table-tariff__head table-tariff__row">
 									<div class="table-tariff__cell table-tariff__cell--feature">Наповнення</div>
 									<div class="table-tariff__cell table-tariff__cell--plan">Звичайний тариф Коло.ТБ</div>
@@ -359,7 +390,7 @@
 							</div>
 						</div>
 					</section>
-					<section class="connect">
+					<section class="connect" data-fls-watcher="">
 						<div class="connect__container">
 							<div class="connect__body">
 								<h2 class="connect__title">підключити пакет KOLO.SMART</h2>
