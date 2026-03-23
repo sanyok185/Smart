@@ -138,6 +138,9 @@ body {
 .about__bg:nth-child(2) {
   top: 30%;
 }
+.about__bg:nth-child(3) {
+  top: 60%;
+}
 .about {
   /* .about__container */
 }
