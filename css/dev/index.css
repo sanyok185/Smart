@@ -136,7 +136,7 @@ body {
   top: 0;
 }
 .about__bg:nth-child(2) {
-  top: 30%;
+  top: 42%;
 }
 .about {
   /* .about__container */
@@ -589,7 +589,7 @@ html.touch .item-about.is-open .item-about__image {
   background-color: #39B54A;
   border: 0.0625rem solid #39B54A;
   border-radius: 6.25rem;
-  padding: 2.25rem 6.625rem;
+  padding: 1.75rem 6.625rem;
   transition: all 0.3s ease;
 }
 .header__button:active {
