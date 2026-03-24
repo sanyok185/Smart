@@ -75,6 +75,7 @@ document.addEventListener("formSent", function(e) {
   successMessage.style.display = "flex";
 });
 let isAnimating = false;
+let triggered = false;
 const header = document.querySelector(".header");
 const nextSection = document.querySelector(".about");
 function smoothScrollTo(targetY, duration = 700) {
@@ -83,14 +84,13 @@ function smoothScrollTo(targetY, duration = 700) {
   const startY = window.pageYOffset;
   const distance = targetY - startY;
   const startTime = performance.now();
-  function easeInOutCubic(t) {
+  function ease(t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
   function step(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    const easedProgress = easeInOutCubic(progress);
-    window.scrollTo(0, startY + distance * easedProgress);
+    window.scrollTo(0, startY + distance * ease(progress));
     if (progress < 1) {
       requestAnimationFrame(step);
     } else {
@@ -99,22 +99,16 @@ function smoothScrollTo(targetY, duration = 700) {
   }
   requestAnimationFrame(step);
 }
-window.addEventListener(
-  "wheel",
-  (e) => {
-    if (isAnimating) return;
-    if (e.deltaY <= 0) return;
-    const headerRect = header.getBoundingClientRect();
-    const headerTop = headerRect.top;
-    const headerBottom = headerRect.bottom;
-    if (headerTop <= 0 && headerBottom > 0) {
-      e.preventDefault();
-      const targetY = nextSection.getBoundingClientRect().top + window.pageYOffset;
-      smoothScrollTo(targetY, 800);
-    }
-  },
-  { passive: false }
-);
+window.addEventListener("scroll", () => {
+  if (triggered || isAnimating) return;
+  const scrollY = window.pageYOffset;
+  const headerHeight = header.offsetHeight;
+  if (scrollY > 5 && scrollY < headerHeight) {
+    triggered = true;
+    const targetY = nextSection.getBoundingClientRect().top + window.pageYOffset;
+    smoothScrollTo(targetY, 800);
+  }
+});
 const blocks = document.querySelectorAll(".block-about");
 function clamp(value, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);
