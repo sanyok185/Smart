@@ -74,6 +74,24 @@ document.addEventListener("formSent", function(e) {
   currentForm.style.display = "none";
   successMessage.style.display = "flex";
 });
+let isLocked = false;
+const header = document.querySelector(".header");
+const nextSection = document.querySelector(".about");
+window.addEventListener("wheel", (e) => {
+  if (isLocked) return;
+  const headerBottom = header.getBoundingClientRect().bottom;
+  if (headerBottom > 0 && e.deltaY > 0) {
+    isLocked = true;
+    const target = nextSection.offsetTop;
+    window.scrollTo({
+      top: target,
+      behavior: "smooth"
+    });
+    setTimeout(() => {
+      isLocked = false;
+    }, 600);
+  }
+});
 let formValidate = {
   getErrors(form) {
     let error = 0;
