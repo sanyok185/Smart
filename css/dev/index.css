@@ -159,13 +159,15 @@ html {
   /* .about__block */
 }
 .block-about {
-  z-index: 2;
-  opacity: 0;
-  transition: all 1.5s ease 0.2s;
   transform-origin: top center;
-  transform: translateY(1.875rem);
+  will-change: transform, opacity;
+  opacity: 0;
+  transform: translateY(3.75rem) scale(1, 1);
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease;
 }
-.block-about.--watcher-view {
+.block-about.is-show {
   opacity: 1;
   transform: translateY(0);
 }

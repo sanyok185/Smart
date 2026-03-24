@@ -77,6 +77,7 @@ document.addEventListener("formSent", function(e) {
 let isLocked = false;
 const header = document.querySelector(".header");
 const nextSection = document.querySelector(".about");
+const firstBlock = document.querySelector(".block-about");
 function smoothScrollTo(targetY, duration = 700) {
   const startY = window.pageYOffset;
   const distance = targetY - startY;
@@ -93,6 +94,7 @@ function smoothScrollTo(targetY, duration = 700) {
       requestAnimationFrame(step);
     } else {
       isLocked = false;
+      firstBlock.classList.add("is-show");
     }
   }
   requestAnimationFrame(step);
@@ -100,14 +102,47 @@ function smoothScrollTo(targetY, duration = 700) {
 window.addEventListener("wheel", (e) => {
   if (isLocked) return;
   const headerRect = header.getBoundingClientRect();
-  const headerTop = headerRect.top;
-  const headerBottom = headerRect.bottom;
-  if (headerTop <= 0 && headerBottom > 0 && e.deltaY > 0) {
+  if (headerRect.top <= 0 && headerRect.bottom > 0 && e.deltaY > 0) {
     e.preventDefault();
     isLocked = true;
     smoothScrollTo(nextSection.offsetTop, 800);
   }
 }, { passive: false });
+const blocks = document.querySelectorAll(".block-about");
+function clamp(value, min = 0, max = 1) {
+  return Math.min(Math.max(value, min), max);
+}
+function lerp(start, end, progress) {
+  return start + (end - start) * progress;
+}
+function updateBlocks() {
+  const vh = window.innerHeight;
+  blocks.forEach((block) => {
+    const rect = block.getBoundingClientRect();
+    const enterStart = vh;
+    const enterEnd = vh * 0.2;
+    const enterProgress = clamp((enterStart - rect.top) / (enterStart - enterEnd));
+    const exitProgress = clamp(Math.abs(rect.top) / (vh * 0.75));
+    let translateY = 0;
+    let scaleX = 1;
+    let scaleY = 1;
+    let opacity = 1;
+    if (rect.top > 0) {
+      translateY = lerp(60, 0, enterProgress);
+      opacity = enterProgress;
+    } else {
+      translateY = lerp(0, -160, exitProgress);
+      scaleX = lerp(1, 0.45, exitProgress);
+      scaleY = lerp(1, 1.12, exitProgress);
+      opacity = lerp(1, 0, exitProgress);
+    }
+    block.style.transform = `translateY(${translateY}px) scale(${scaleX}, ${scaleY})`;
+    block.style.opacity = opacity;
+  });
+}
+window.addEventListener("scroll", updateBlocks);
+window.addEventListener("resize", updateBlocks);
+updateBlocks();
 let formValidate = {
   getErrors(form) {
     let error = 0;
