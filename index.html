@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="assets/img/favicon.ico">
 		<title>Kolo.TB - Smart</title>
-		<script type="module" crossorigin="" src="./js/index.min.js?v=1774348560275"></script>
-		<link rel="modulepreload" crossorigin="" href="./js/common.min.js?v=1774348560275">
-		<link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1774348560275">
+		<script type="module" crossorigin="" src="./js/index.min.js?v=1774357380572"></script>
+		<link rel="modulepreload" crossorigin="" href="./js/common.min.js?v=1774357380572">
+		<link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1774357380572">
 	</head>
 	<body>
 		<div class="wrapper">
@@ -23,13 +23,25 @@
 						</div>
 						<h1 class="header__title" data-fls-watcher="">Пакет розширених можливостей до твого тарифу інтернет</h1>
 						<div class="header__button-wrapper" data-fls-watcher="">
-							<a href="#" data-fls-button="" class="header__button">Додати пакет</a>
+							<a href="#connect" data-fls-button="" class="header__button">Додати пакет</a>
 						</div>
 					</div>
 				</div>
 			</header>
 			<main class="page">
-				<div data-fls-index="" class="index">
+				<div data-fls-index="" class="content-wrapper">
+					<div class="content-wrapper__track">
+						<picture>
+							<source media="(max-width: 600px)" srcset="./assets/img/lines-600.webp" type="image/webp">
+							<source media="(max-width: 1200px)" srcset="./assets/img/lines-1200.webp" type="image/webp">
+							<img alt="" class="content-wrapper__line" src="./assets/img/lines.webp">
+						</picture>
+						<picture>
+							<source media="(max-width: 600px)" srcset="./assets/img/lines-600.webp" type="image/webp">
+							<source media="(max-width: 1200px)" srcset="./assets/img/lines-1200.webp" type="image/webp">
+							<img alt="" class="content-wrapper__line" src="./assets/img/lines.webp">
+						</picture>
+					</div>
 					<section class="about">
 						<div class="about__container">
 							<div class="about__block block-about block-about--first" data-fls-watcher="">
@@ -384,17 +396,19 @@
 							</div>
 						</div>
 					</section>
-					<section class="connect" data-fls-watcher="" <div="">
-						<div class="connect__body">
-							<h2 class="connect__title">підключити пакет KOLO.SMART</h2>
-							<div class="connect__form-wrapper">
-								<form action="" method="POST" class="connect__form form-connect" data-fls-form="dev">
-									<input required data-fls-input="" type="text" name="Name" data-error="Помилка" placeholder="Ваше ім’я" class="form-connect__input input">
-									<input required data-fls-input="" type="text" name="Phone" data-error="Помилка" placeholder="+380 (XX) XXX-XX-XX" class="form-connect__input input">
-									<button type="submit" class="form-connect__button">Підключити</button>
-								</form>
-								<div class="connect__success">
-									<h3 class="connect__success-title">Дякуємо! Ми неодмінно звяжемось з вами найближчим часом</h3>
+					<section class="connect" data-fls-watcher="" id="connect">
+						<div class="connect__container">
+							<div class="connect__body">
+								<h2 class="connect__title">підключити пакет KOLO.SMART</h2>
+								<div class="connect__form-wrapper">
+									<form action="" method="POST" class="connect__form form-connect" data-fls-form="dev">
+										<input required data-fls-input="" type="text" name="Name" data-error="Помилка" placeholder="Ваше ім’я" class="form-connect__input input">
+										<input required data-fls-input="" type="text" name="Phone" data-error="Помилка" placeholder="+380 (XX) XXX-XX-XX" class="form-connect__input input">
+										<button type="submit" class="form-connect__button">Підключити</button>
+									</form>
+									<div class="connect__success">
+										<h3 class="connect__success-title">Дякуємо! Ми неодмінно звяжемось з вами найближчим часом</h3>
+									</div>
 								</div>
 							</div>
 						</div>

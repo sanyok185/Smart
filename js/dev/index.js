@@ -74,11 +74,12 @@ document.addEventListener("formSent", function(e) {
   currentForm.style.display = "none";
   successMessage.style.display = "flex";
 });
-let isLocked = false;
+let isAnimating = false;
 const header = document.querySelector(".header");
 const nextSection = document.querySelector(".about");
-const firstBlock = document.querySelector(".block-about");
 function smoothScrollTo(targetY, duration = 700) {
+  if (isAnimating) return;
+  isAnimating = true;
   const startY = window.pageYOffset;
   const distance = targetY - startY;
   const startTime = performance.now();
@@ -93,21 +94,27 @@ function smoothScrollTo(targetY, duration = 700) {
     if (progress < 1) {
       requestAnimationFrame(step);
     } else {
-      isLocked = false;
-      firstBlock.classList.add("is-show");
+      isAnimating = false;
     }
   }
   requestAnimationFrame(step);
 }
-window.addEventListener("wheel", (e) => {
-  if (isLocked) return;
-  const headerRect = header.getBoundingClientRect();
-  if (headerRect.top <= 0 && headerRect.bottom > 0 && e.deltaY > 0) {
-    e.preventDefault();
-    isLocked = true;
-    smoothScrollTo(nextSection.offsetTop, 800);
-  }
-}, { passive: false });
+window.addEventListener(
+  "wheel",
+  (e) => {
+    if (isAnimating) return;
+    if (e.deltaY <= 0) return;
+    const headerRect = header.getBoundingClientRect();
+    const headerTop = headerRect.top;
+    const headerBottom = headerRect.bottom;
+    if (headerTop <= 0 && headerBottom > 0) {
+      e.preventDefault();
+      const targetY = nextSection.getBoundingClientRect().top + window.pageYOffset;
+      smoothScrollTo(targetY, 800);
+    }
+  },
+  { passive: false }
+);
 const blocks = document.querySelectorAll(".block-about");
 function clamp(value, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);
