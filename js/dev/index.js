@@ -77,21 +77,37 @@ document.addEventListener("formSent", function(e) {
 let isLocked = false;
 const header = document.querySelector(".header");
 const nextSection = document.querySelector(".about");
+function smoothScrollTo(targetY, duration = 700) {
+  const startY = window.pageYOffset;
+  const distance = targetY - startY;
+  const startTime = performance.now();
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+  function step(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easedProgress = easeInOutCubic(progress);
+    window.scrollTo(0, startY + distance * easedProgress);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      isLocked = false;
+    }
+  }
+  requestAnimationFrame(step);
+}
 window.addEventListener("wheel", (e) => {
   if (isLocked) return;
-  const headerBottom = header.getBoundingClientRect().bottom;
-  if (headerBottom > 0 && e.deltaY > 0) {
+  const headerRect = header.getBoundingClientRect();
+  const headerTop = headerRect.top;
+  const headerBottom = headerRect.bottom;
+  if (headerTop <= 0 && headerBottom > 0 && e.deltaY > 0) {
+    e.preventDefault();
     isLocked = true;
-    const target = nextSection.offsetTop;
-    window.scrollTo({
-      top: target,
-      behavior: "smooth"
-    });
-    setTimeout(() => {
-      isLocked = false;
-    }, 600);
+    smoothScrollTo(nextSection.offsetTop, 800);
   }
-});
+}, { passive: false });
 let formValidate = {
   getErrors(form) {
     let error = 0;
@@ -287,17 +303,18 @@ class ScrollWatcher {
     };
     this.config = Object.assign(defaultConfig, props);
     this.observer;
-    this.lastScrollY = window.scrollY;
     !document.documentElement.hasAttribute("data-fls-watch") ? this.scrollWatcherRun() : null;
   }
+  // Оновлюємо конструктор
   scrollWatcherUpdate() {
     this.scrollWatcherRun();
   }
+  // Запускаємо конструктор
   scrollWatcherRun() {
     document.documentElement.setAttribute("data-fls-watch", "");
     this.scrollWatcherConstructor(document.querySelectorAll("[data-fls-watcher]"));
-    this.initTopWatcher();
   }
+  // Конструктор спостерігачів
   scrollWatcherConstructor(items) {
     if (items.length) {
       let uniqParams = uniqArray(Array.from(items).map(function(item) {
@@ -338,6 +355,7 @@ class ScrollWatcher {
       });
     }
   }
+  // Функція створення налаштувань
   getScrollWatcherConfig(paramsWatch) {
     let configWatcher = {};
     if (document.querySelector(paramsWatch.root)) {
@@ -358,6 +376,7 @@ class ScrollWatcher {
     configWatcher.threshold = paramsWatch.threshold;
     return configWatcher;
   }
+  // Функція створення нового спостерігача зі своїми налаштуваннями
   scrollWatcherCreate(configWatcher) {
     this.observer = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
@@ -365,10 +384,12 @@ class ScrollWatcher {
       });
     }, configWatcher);
   }
+  // Функція ініціалізації спостерігача зі своїми налаштуваннями
   scrollWatcherInit(items, configWatcher) {
     this.scrollWatcherCreate(configWatcher);
     items.forEach((item) => this.observer.observe(item));
   }
+  // Функція обробки базових дій точок спрацьовування
   scrollWatcherIntersecting(entry, targetElement) {
     if (entry.isIntersecting) {
       !targetElement.classList.contains("--watcher-view") ? targetElement.classList.add("--watcher-view") : null;
@@ -376,9 +397,11 @@ class ScrollWatcher {
       targetElement.classList.contains("--watcher-view") ? targetElement.classList.remove("--watcher-view") : null;
     }
   }
+  // Функція відключення стеження за об'єктом
   scrollWatcherOff(targetElement, observer) {
     observer.unobserve(targetElement);
   }
+  // Функція обробки спостереження
   scrollWatcherCallback(entry, observer) {
     const targetElement = entry.target;
     this.scrollWatcherIntersecting(entry, targetElement);
@@ -388,26 +411,6 @@ class ScrollWatcher {
         entry
       }
     }));
-  }
-  initTopWatcher() {
-    const items = document.querySelectorAll("[data-fls-watcher]");
-    const check = () => {
-      const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > this.lastScrollY;
-      const isScrollingUp = currentScrollY < this.lastScrollY;
-      items.forEach((item) => {
-        const rect = item.getBoundingClientRect();
-        if (isScrollingDown && rect.top <= 0) {
-          item.classList.add("--watcher-out");
-        }
-        if (isScrollingUp && rect.bottom >= 0) {
-          item.classList.remove("--watcher-out");
-        }
-      });
-      this.lastScrollY = currentScrollY;
-    };
-    window.addEventListener("scroll", check);
-    window.addEventListener("load", check);
   }
 }
 document.querySelector("[data-fls-watcher]") ? window.addEventListener("load", () => new ScrollWatcher({})) : null;
