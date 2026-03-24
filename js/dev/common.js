@@ -1,3 +1,8 @@
+function getHash() {
+  if (location.hash) {
+    return location.hash.replace("#", "");
+  }
+}
 let bodyLockStatus = true;
 let bodyUnlock = (delay = 500) => {
   if (bodyLockStatus) {
@@ -52,6 +57,8 @@ const gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) =>
   }
 };
 export {
+  getHash as a,
+  bodyUnlock as b,
   gotoBlock as g,
   uniqArray as u
 };
