@@ -78,18 +78,9 @@ let isAnimating = false;
 let isTriggered = false;
 const header = document.querySelector(".header");
 const nextSection = document.querySelector(".about");
-function lockScroll() {
-  document.documentElement.style.overflow = "hidden";
-  document.body.style.overflow = "hidden";
-}
-function unlockScroll() {
-  document.documentElement.style.overflow = "";
-  document.body.style.overflow = "";
-}
 function smoothScrollTo(targetY, duration = 700) {
   if (isAnimating) return;
   isAnimating = true;
-  lockScroll();
   const startY = window.pageYOffset;
   const distance = targetY - startY;
   const startTime = performance.now();
@@ -106,7 +97,6 @@ function smoothScrollTo(targetY, duration = 700) {
     } else {
       isAnimating = false;
       isTriggered = true;
-      unlockScroll();
     }
   }
   requestAnimationFrame(step);
@@ -114,21 +104,28 @@ function smoothScrollTo(targetY, duration = 700) {
 window.addEventListener(
   "wheel",
   (e) => {
-    if (isAnimating || isTriggered) {
+    if (isAnimating) {
       e.preventDefault();
       return;
     }
+    if (isTriggered) return;
     if (e.deltaY <= 0) return;
     const scrollTop = window.pageYOffset;
     const headerHeight = header.offsetHeight;
     if (scrollTop < headerHeight - 1) {
       e.preventDefault();
+      window.scrollTo(0, scrollTop);
       const targetY = nextSection.getBoundingClientRect().top + window.pageYOffset;
       smoothScrollTo(targetY, 700);
     }
   },
   { passive: false }
 );
+window.addEventListener("scroll", () => {
+  if (!isAnimating && window.pageYOffset < 5) {
+    isTriggered = false;
+  }
+});
 const blocks = document.querySelectorAll(".block-about");
 function clamp(value, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);

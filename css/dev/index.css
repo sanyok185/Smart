@@ -863,7 +863,7 @@ textarea.input {
     margin-right: 1rem;
   }
   .why {
-    margin-left: 0.0625rem;
+    margin-left: 1rem;
   }
   .why {
     margin-bottom: 3.75rem;
@@ -1021,7 +1021,7 @@ textarea.input {
     margin-right: clamp( 1rem , 0.575rem  +  2.125vw , 3.125rem );
   }
   .why {
-    margin-left: clamp( 0.0625rem , -0.55rem  +  3.0625vw , 3.125rem );
+    margin-left: clamp( 1rem , 0.575rem  +  2.125vw , 3.125rem );
   }
   .why {
     margin-bottom: clamp( 3.75rem , 3rem  +  3.75vw , 7.5rem );
