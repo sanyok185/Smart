@@ -75,7 +75,7 @@ document.addEventListener("formSent", function(e) {
   successMessage.style.display = "flex";
 });
 let isAnimating = false;
-let triggered = false;
+let isTriggered = false;
 const header = document.querySelector(".header");
 const nextSection = document.querySelector(".about");
 function smoothScrollTo(targetY, duration = 700) {
@@ -84,31 +84,38 @@ function smoothScrollTo(targetY, duration = 700) {
   const startY = window.pageYOffset;
   const distance = targetY - startY;
   const startTime = performance.now();
-  function ease(t) {
+  function easeInOutCubic(t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
   function step(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    window.scrollTo(0, startY + distance * ease(progress));
+    const easedProgress = easeInOutCubic(progress);
+    window.scrollTo(0, startY + distance * easedProgress);
     if (progress < 1) {
       requestAnimationFrame(step);
     } else {
       isAnimating = false;
+      isTriggered = true;
     }
   }
   requestAnimationFrame(step);
 }
-window.addEventListener("scroll", () => {
-  if (triggered || isAnimating) return;
-  const scrollY = window.pageYOffset;
-  const headerHeight = header.offsetHeight;
-  if (scrollY > 5 && scrollY < headerHeight) {
-    triggered = true;
-    const targetY = nextSection.getBoundingClientRect().top + window.pageYOffset;
-    smoothScrollTo(targetY, 800);
-  }
-});
+window.addEventListener(
+  "wheel",
+  (e) => {
+    if (isAnimating || isTriggered) return;
+    if (e.deltaY <= 0) return;
+    const scrollTop = window.pageYOffset;
+    const headerHeight = header.offsetHeight;
+    if (scrollTop < headerHeight - 5) {
+      e.preventDefault();
+      const targetY = nextSection.getBoundingClientRect().top + window.pageYOffset;
+      smoothScrollTo(targetY, 600);
+    }
+  },
+  { passive: false }
+);
 const blocks = document.querySelectorAll(".block-about");
 function clamp(value, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);
