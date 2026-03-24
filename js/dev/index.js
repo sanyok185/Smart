@@ -111,7 +111,7 @@ window.addEventListener(
     if (scrollTop < headerHeight - 5) {
       e.preventDefault();
       const targetY = nextSection.getBoundingClientRect().top + window.pageYOffset;
-      smoothScrollTo(targetY, 600);
+      smoothScrollTo(targetY, 700);
     }
   },
   { passive: false }
