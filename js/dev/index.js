@@ -138,10 +138,15 @@ function easeInOutCubic(t) {
 }
 let isProgrammaticScroll = false;
 let lastScrollY = window.scrollY;
-let lastTriggerTime = 0;
+let autoScrollRaf = null;
+const prevExitMap = /* @__PURE__ */ new WeakMap();
 function smoothViewportScrollBy(distance = 700, duration = 1200) {
   if (isProgrammaticScroll) return;
   isProgrammaticScroll = true;
+  if (autoScrollRaf) {
+    cancelAnimationFrame(autoScrollRaf);
+    autoScrollRaf = null;
+  }
   const startY = window.pageYOffset;
   const targetY = startY + distance;
   const startTime = performance.now();
@@ -149,15 +154,16 @@ function smoothViewportScrollBy(distance = 700, duration = 1200) {
     const elapsed = now - startTime;
     const progress = clamp(elapsed / duration);
     const eased = easeInOutCubic(progress);
-    const currentY = lerp(startY, targetY, eased);
-    window.scrollTo(0, currentY);
+    const nextY = lerp(startY, targetY, eased);
+    window.scrollTo(0, nextY);
     if (progress < 1) {
-      requestAnimationFrame(step);
+      autoScrollRaf = requestAnimationFrame(step);
     } else {
       isProgrammaticScroll = false;
+      autoScrollRaf = null;
     }
   }
-  requestAnimationFrame(step);
+  autoScrollRaf = requestAnimationFrame(step);
 }
 function updateBlocks() {
   const vh = window.innerHeight;
@@ -169,6 +175,7 @@ function updateBlocks() {
     const enterEnd = vh * 0.2;
     const enterProgress = clamp((enterStart - rect.top) / (enterStart - enterEnd));
     const exitProgress = clamp(Math.abs(rect.top) / (vh * 0.75));
+    const prevExitProgress = prevExitMap.get(block) ?? 0;
     let translateY = 0;
     let scaleX = 1;
     let scaleY = 1;
@@ -181,15 +188,14 @@ function updateBlocks() {
       scaleX = lerp(1, 0.45, exitProgress);
       scaleY = lerp(1, 1.12, exitProgress);
       opacity = lerp(1, 0, exitProgress);
-      const now = performance.now();
-      const canTriggerAgain = now - lastTriggerTime > 900;
-      if (isScrollingDown && !isProgrammaticScroll && canTriggerAgain && exitProgress >= 0.08 && exitProgress <= 0.16) {
-        lastTriggerTime = now;
+      const enteredTriggerZone = prevExitProgress < 0.1 && exitProgress >= 0.1 && exitProgress <= 0.2;
+      if (isScrollingDown && !isProgrammaticScroll && enteredTriggerZone) {
         smoothViewportScrollBy(700, 1200);
       }
     }
     block.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`;
     block.style.opacity = opacity;
+    prevExitMap.set(block, exitProgress);
   });
   lastScrollY = currentScrollY;
 }
