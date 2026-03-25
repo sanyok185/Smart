@@ -119,11 +119,11 @@ html {
   width: 100%;
   display: flex;
   flex-direction: column;
-  animation: linesMove 70s linear infinite;
+  animation: linesMove 75s linear infinite;
   will-change: transform;
 }
 .content-wrapper__line {
-  opacity: 0.1;
+  opacity: 0.05;
   width: 100%;
   display: block;
   flex: 0 0 auto;

@@ -84,13 +84,13 @@ function smoothScrollTo(targetY, duration = 700) {
   const startY = window.pageYOffset;
   const distance = targetY - startY;
   const startTime = performance.now();
-  function easeInOutCubic(t) {
+  function easeInOutCubic2(t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
   function step(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    const easedProgress = easeInOutCubic(progress);
+    const easedProgress = easeInOutCubic2(progress);
     window.scrollTo(0, startY + distance * easedProgress);
     if (progress < 1) {
       requestAnimationFrame(step);
@@ -126,15 +126,43 @@ window.addEventListener("scroll", () => {
     isTriggered = false;
   }
 });
-const blocks = document.querySelectorAll(".block-about");
+const blocks = [...document.querySelectorAll(".block-about")];
 function clamp(value, min = 0, max = 1) {
   return Math.min(Math.max(value, min), max);
 }
 function lerp(start, end, progress) {
   return start + (end - start) * progress;
 }
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+let isProgrammaticScroll = false;
+let lastScrollY = window.scrollY;
+let lastTriggerTime = 0;
+function smoothViewportScrollBy(distance = 700, duration = 1200) {
+  if (isProgrammaticScroll) return;
+  isProgrammaticScroll = true;
+  const startY = window.pageYOffset;
+  const targetY = startY + distance;
+  const startTime = performance.now();
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = clamp(elapsed / duration);
+    const eased = easeInOutCubic(progress);
+    const currentY = lerp(startY, targetY, eased);
+    window.scrollTo(0, currentY);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      isProgrammaticScroll = false;
+    }
+  }
+  requestAnimationFrame(step);
+}
 function updateBlocks() {
   const vh = window.innerHeight;
+  const currentScrollY = window.scrollY;
+  const isScrollingDown = currentScrollY > lastScrollY;
   blocks.forEach((block) => {
     const rect = block.getBoundingClientRect();
     const enterStart = vh;
@@ -153,13 +181,29 @@ function updateBlocks() {
       scaleX = lerp(1, 0.45, exitProgress);
       scaleY = lerp(1, 1.12, exitProgress);
       opacity = lerp(1, 0, exitProgress);
+      const now = performance.now();
+      const canTriggerAgain = now - lastTriggerTime > 900;
+      if (isScrollingDown && !isProgrammaticScroll && canTriggerAgain && exitProgress >= 0.08 && exitProgress <= 0.16) {
+        lastTriggerTime = now;
+        smoothViewportScrollBy(700, 1200);
+      }
     }
-    block.style.transform = `translateY(${translateY}px) scale(${scaleX}, ${scaleY})`;
+    block.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`;
     block.style.opacity = opacity;
   });
+  lastScrollY = currentScrollY;
 }
-window.addEventListener("scroll", updateBlocks);
-window.addEventListener("resize", updateBlocks);
+let ticking = false;
+function requestUpdate() {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    updateBlocks();
+    ticking = false;
+  });
+}
+window.addEventListener("scroll", requestUpdate, { passive: true });
+window.addEventListener("resize", requestUpdate);
 updateBlocks();
 let formValidate = {
   getErrors(form) {
