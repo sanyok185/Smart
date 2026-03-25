@@ -136,17 +136,12 @@ function lerp(start, end, progress) {
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
-let isProgrammaticScroll = false;
-let lastScrollY = window.scrollY;
-let autoScrollRaf = null;
-const prevExitMap = /* @__PURE__ */ new WeakMap();
-function smoothViewportScrollBy(distance = 700, duration = 1200) {
-  if (isProgrammaticScroll) return;
-  isProgrammaticScroll = true;
-  if (autoScrollRaf) {
-    cancelAnimationFrame(autoScrollRaf);
-    autoScrollRaf = null;
-  }
+let isAutoScrolling = false;
+let lastWheelTime = 0;
+let lastTriggeredBlockIndex = -1;
+function smoothViewportScrollBy(distance = 420, duration = 800) {
+  if (isAutoScrolling) return;
+  isAutoScrolling = true;
   const startY = window.pageYOffset;
   const targetY = startY + distance;
   const startTime = performance.now();
@@ -157,25 +152,21 @@ function smoothViewportScrollBy(distance = 700, duration = 1200) {
     const nextY = lerp(startY, targetY, eased);
     window.scrollTo(0, nextY);
     if (progress < 1) {
-      autoScrollRaf = requestAnimationFrame(step);
+      requestAnimationFrame(step);
     } else {
-      isProgrammaticScroll = false;
-      autoScrollRaf = null;
+      isAutoScrolling = false;
     }
   }
-  autoScrollRaf = requestAnimationFrame(step);
+  requestAnimationFrame(step);
 }
 function updateBlocks() {
   const vh = window.innerHeight;
-  const currentScrollY = window.scrollY;
-  const isScrollingDown = currentScrollY > lastScrollY;
   blocks.forEach((block) => {
     const rect = block.getBoundingClientRect();
     const enterStart = vh;
     const enterEnd = vh * 0.2;
     const enterProgress = clamp((enterStart - rect.top) / (enterStart - enterEnd));
     const exitProgress = clamp(Math.abs(rect.top) / (vh * 0.75));
-    const prevExitProgress = prevExitMap.get(block) ?? 0;
     let translateY = 0;
     let scaleX = 1;
     let scaleY = 1;
@@ -188,16 +179,23 @@ function updateBlocks() {
       scaleX = lerp(1, 0.45, exitProgress);
       scaleY = lerp(1, 1.12, exitProgress);
       opacity = lerp(1, 0, exitProgress);
-      const enteredTriggerZone = prevExitProgress < 0.1 && exitProgress >= 0.1 && exitProgress <= 0.2;
-      if (isScrollingDown && !isProgrammaticScroll && enteredTriggerZone) {
-        smoothViewportScrollBy(700, 1200);
-      }
     }
     block.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`;
     block.style.opacity = opacity;
-    prevExitMap.set(block, exitProgress);
   });
-  lastScrollY = currentScrollY;
+}
+function getActiveTriggerBlock() {
+  const vh = window.innerHeight;
+  for (let i = 0; i < blocks.length; i++) {
+    const rect = blocks[i].getBoundingClientRect();
+    if (rect.top <= 0 && rect.bottom > 0) {
+      const exitProgress = clamp(Math.abs(rect.top) / (vh * 0.75));
+      if (exitProgress >= 0.08 && exitProgress <= 0.18) {
+        return { index: i, block: blocks[i] };
+      }
+    }
+  }
+  return null;
 }
 let ticking = false;
 function requestUpdate() {
@@ -210,6 +208,27 @@ function requestUpdate() {
 }
 window.addEventListener("scroll", requestUpdate, { passive: true });
 window.addEventListener("resize", requestUpdate);
+window.addEventListener(
+  "wheel",
+  (e) => {
+    if (isAutoScrolling) {
+      e.preventDefault();
+      return;
+    }
+    if (e.deltaY <= 0) return;
+    const now = performance.now();
+    if (now - lastWheelTime < 350) return;
+    const active = getActiveTriggerBlock();
+    if (!active) return;
+    if (active.index !== lastTriggeredBlockIndex) {
+      e.preventDefault();
+      lastWheelTime = now;
+      lastTriggeredBlockIndex = active.index;
+      smoothViewportScrollBy(720, 800);
+    }
+  },
+  { passive: false }
+);
 updateBlocks();
 let formValidate = {
   getErrors(form) {
