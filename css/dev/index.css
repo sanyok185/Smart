@@ -134,7 +134,7 @@ html {
   display: block;
   width: 100%;
   flex: 0 0 auto;
-  opacity: 0.15;
+  opacity: 0.1;
   position: relative;
   z-index: -1;
 }
@@ -728,7 +728,6 @@ textarea.input {
 }@media (max-width: 81.25em) {
   .content-wrapper__track {
     width: 150%;
-    transform: translateX(-50%);
   }
 }@media (width <= 68.75em) {
   .block-about__items {
@@ -761,6 +760,7 @@ textarea.input {
 }@media (max-width: 62.5em) {
   .content-wrapper__track {
     width: 180%;
+    transform: translateX(-50%);
   }
 }@media (max-width: 61.99875em) {
   .item-about__content {
@@ -781,7 +781,7 @@ textarea.input {
   }
 }@media (max-width: 47.99875em) {
   .content-wrapper__track {
-    width: 200%;
+    width: 260%;
   }
   .block-about__header {
     flex-direction: column;
@@ -829,7 +829,7 @@ textarea.input {
   }
 }@media (width <= 37.5em) {
   .content-wrapper__track {
-    width: 250%;
+    width: 320%;
   }
 }@media (max-width: 37.5em) {
   .block-about--third .block-about__items {
@@ -861,7 +861,7 @@ textarea.input {
   }
 }@media (max-width: 29.99875em) {
   .content-wrapper__track {
-    width: 300%;
+    width: 350%;
   }
   .form-connect__input {
     padding: 1rem;
@@ -869,6 +869,10 @@ textarea.input {
   .header__button {
     width: 100%;
     padding: 1.25rem 3rem;
+  }
+}@media (width <= 24.375em) {
+  .content-wrapper__track {
+    width: 380%;
   }
 }@media (width <= 20em) {
   .block-about {

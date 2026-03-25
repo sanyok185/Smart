@@ -135,8 +135,11 @@ function lerp(start, end, progress) {
 }
 let isProgrammaticScroll = false;
 const triggered = /* @__PURE__ */ new WeakSet();
+function isDesktop() {
+  return window.innerWidth >= 1100;
+}
 function smoothViewportScrollBy(distance = 200, duration = 500) {
-  if (isProgrammaticScroll) return;
+  if (isProgrammaticScroll || !isDesktop()) return;
   isProgrammaticScroll = true;
   const startY = window.pageYOffset;
   const targetY = startY + distance;
@@ -159,6 +162,7 @@ function smoothViewportScrollBy(distance = 200, duration = 500) {
   requestAnimationFrame(step);
 }
 function updateBlocks() {
+  if (!isDesktop()) return;
   const vh = window.innerHeight;
   blocks.forEach((block) => {
     const rect = block.getBoundingClientRect();
@@ -197,7 +201,17 @@ function requestUpdate() {
   });
 }
 window.addEventListener("scroll", requestUpdate, { passive: true });
-window.addEventListener("resize", requestUpdate);
+window.addEventListener("resize", () => {
+  if (!isDesktop()) {
+    blocks.forEach((block) => {
+      block.style.transform = "";
+      block.style.opacity = "";
+    });
+    triggered.clear?.();
+    isProgrammaticScroll = false;
+  }
+  requestUpdate();
+});
 updateBlocks();
 let formValidate = {
   getErrors(form) {
