@@ -135,6 +135,8 @@ html {
   width: 100%;
   flex: 0 0 auto;
   opacity: 0.1;
+}
+.content-wrapper__line {
   position: relative;
   z-index: -1;
 }
@@ -389,25 +391,38 @@ html.touch .item-about.is-open .item-about__image {
 .table-tariff__head {
   font-weight: 500;
   background: rgb(245, 247, 250);
-  padding: 1.125rem 0rem;
+  padding: 0.625rem 0;
 }
 .table-tariff__body .table-tariff__row {
   border-top: 0.0625rem solid rgb(229, 231, 235);
 }
+.table-tariff__logo {
+  margin-bottom: 0.125rem;
+}
 .table-tariff__cell {
-  padding: 1.125rem 2.5rem;
+  justify-self: center;
+  padding: 1.125rem 1.5rem;
 }
 .table-tariff__cell {
   line-height: 1.2;
 }
 .table-tariff__cell--feature {
   text-align: left;
+  justify-self: start;
 }
 .table-tariff__cell--plan {
   text-align: center;
+  display: flex;
+  align-items: center;
+  row-gap: 0.375rem;
+}
+.table-tariff__cell--plan {
+  column-gap: 0.75rem;
 }
 .table-tariff__footer {
-  padding: 1.3125rem 1.25rem;
+  padding: 2.1875rem 1.25rem;
+}
+.table-tariff__footer {
   text-align: center;
   line-height: 1.3;
   background: rgb(245, 247, 250);
@@ -442,6 +457,7 @@ html.touch .item-about.is-open .item-about__image {
   /* .connect__title */
 }
 .connect__title {
+  font-weight: 700;
   text-align: center;
 }
 .connect__title {
@@ -460,8 +476,18 @@ html.touch .item-about.is-open .item-about__image {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+}
+.connect__row {
+  display: flex;
+  align-items: center;
+  gap: 6.25rem;
 }
 .connect {
+  /* .connect__price */
+}
+.connect {
+  /* .connect__form-wrapper */
   /* .connect__success */
 }
 .connect__success {
@@ -725,6 +751,20 @@ textarea.input {
   .item-about__content {
     padding: 1.5625rem;
   }
+}@media (width <= 93.75em) {
+  .connect__row {
+    gap: 1.25rem;
+  }
+}@media (width <= 87.5em) {
+  .connect__title {
+    margin-bottom: 1.25rem;
+  }
+  .form-connect {
+    grid-template-columns: 1fr 1fr 10rem;
+  }
+  .form-connect__input {
+    padding: 1rem;
+  }
 }@media (max-width: 81.25em) {
   .content-wrapper__track {
     width: 150%;
@@ -775,6 +815,10 @@ textarea.input {
   .block-about--third .block-about__items {
     grid-template-columns: repeat(2, 1fr);
   }
+  .table-tariff__cell--plan {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }@media (max-width: 62.5em) {
   .content-wrapper__track {
     width: 180%;
@@ -786,6 +830,9 @@ textarea.input {
   }
   .table-tariff__cell {
     padding: 0.875rem 1.5rem;
+  }
+  .connect__row {
+    flex-direction: column;
   }
   .form-connect {
     grid-template-columns: 1fr 1fr 11.25rem;
@@ -801,9 +848,16 @@ textarea.input {
   .content-wrapper__track {
     width: 240%;
   }
+}@media (width <= 47.99875em) {
+  .connect__price {
+    width: 12.5rem;
+  }
 }@media (max-width: 47.99875em) {
   .content-wrapper__track {
     width: 260%;
+  }
+  .content-wrapper__line {
+    opacity: 0.05;
   }
   .block-about__header {
     flex-direction: column;
@@ -831,6 +885,9 @@ textarea.input {
   .table-tariff__cell--plan {
     padding: 0.875rem 0.75rem;
   }
+  .table-tariff__footer {
+    padding: 1.25rem;
+  }
   .form-connect {
     font-size: 0.875rem;
   }
@@ -851,7 +908,7 @@ textarea.input {
   }
 }@media (width <= 37.5em) {
   .content-wrapper__track {
-    width: 320%;
+    width: 360%;
   }
 }@media (max-width: 37.5em) {
   .block-about--third .block-about__items {
@@ -883,7 +940,7 @@ textarea.input {
   }
 }@media (max-width: 29.99875em) {
   .content-wrapper__track {
-    width: 350%;
+    width: 420%;
   }
   .form-connect__input {
     padding: 1rem;
@@ -894,7 +951,11 @@ textarea.input {
   }
 }@media (width <= 24.375em) {
   .content-wrapper__track {
-    width: 380%;
+    width: 500%;
+  }
+}@media (width <= 23.4375em) {
+  .connect__form-wrapper {
+    padding: 1rem;
   }
 }@media (width <= 20em) {
   .block-about {
@@ -942,6 +1003,9 @@ textarea.input {
   .table-tariff {
     font-size: 0.875rem;
   }
+  .table-tariff__logo {
+    width: 3.125rem;
+  }
   .table-tariff__cell--smart img {
     width: 5rem;
   }
@@ -959,12 +1023,6 @@ textarea.input {
   }
   .connect__title {
     font-size: 1.375rem;
-  }
-  .connect__title {
-    margin-bottom: 1.625rem;
-  }
-  .connect__form-wrapper {
-    padding: 1rem;
   }
   .connect__success-title {
     font-size: 1.25rem;
@@ -1012,6 +1070,9 @@ textarea.input {
     font-size: 0.75rem;
   }
 }@media (width > 20em) and (width <= 97.5em) {
+  .table-tariff__logo {
+    width: clamp( 3.125rem , 1.8508064516125rem  +  6.3709677419vw , 8.0625rem );
+  }
   .header {
     padding-top: clamp( 5rem , 4.354838709675rem  +  3.2258064516vw , 7.5rem );
   }
@@ -1118,14 +1179,12 @@ textarea.input {
   .connect__title {
     font-size: clamp( 1.375rem , 1.25rem  +  0.625vw , 2rem );
   }
-  .connect__title {
-    margin-bottom: clamp( 1.625rem , 1.15rem  +  2.375vw , 4rem );
-  }
-  .connect__form-wrapper {
-    padding: clamp( 1rem , 0.7rem  +  1.5vw , 2.5rem );
-  }
   .connect__success-title {
     font-size: clamp( 1.25rem , 1.15rem  +  0.5vw , 1.75rem );
+  }
+}@media (width > 23.4375em) and (width <= 120em) {
+  .connect__form-wrapper {
+    padding: clamp( 1rem , 0.6359223301rem  +  1.5533980583vw , 2.5rem );
   }
 }@media (min-width: 47.99875em) {
   .block-about__title {
@@ -1134,6 +1193,10 @@ textarea.input {
   .footer__url {
     margin-right: -10%;
   }
+}@media (width > 47.99875em) and (width <= 120em) {
+  .connect__price {
+    width: clamp( 12.5rem , 0.83383969028125rem  +  24.3051335914vw , 30rem );
+  }
 }@media (min-width: 61.99875em) {
   .why__content {
     padding: 0 3.125rem;
@@ -1141,14 +1204,20 @@ textarea.input {
   .table-tariff {
     margin: 0 1.5rem;
   }
-  .connect__body {
-    padding: 0 2.125rem;
+  .table-tariff__cell--feature {
+    padding: 1.125rem 2.5rem !important;
+  }
+  .table-tariff__cell--plan span {
+    white-space: nowrap;
   }
 }@media (width > 68.75em) and (width <= 120em) {
   .block-about__items {
     gap: clamp( 0.75rem , 0.07926829268125rem  +  0.9756097561vw , 1.25rem );
   }
 }@media (width > 97.5em) {
+  .table-tariff__logo {
+    width: 8.0625rem;
+  }
   .header {
     padding-top: 7.5rem;
   }
@@ -1258,11 +1327,11 @@ textarea.input {
   .connect__title {
     font-size: 2rem;
   }
-  .connect__title {
-    margin-bottom: 4rem;
-  }
   .connect__form-wrapper {
     padding: 2.5rem;
+  }
+  .connect__price {
+    width: 30rem;
   }
   .connect__success-title {
     font-size: 1.75rem;
