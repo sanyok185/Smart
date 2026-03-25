@@ -84,13 +84,13 @@ function smoothScrollTo(targetY, duration = 700) {
   const startY = window.pageYOffset;
   const distance = targetY - startY;
   const startTime = performance.now();
-  function easeInOutCubic2(t) {
+  function easeInOutCubic(t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
   function step(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    const easedProgress = easeInOutCubic2(progress);
+    const easedProgress = easeInOutCubic(progress);
     window.scrollTo(0, startY + distance * easedProgress);
     if (progress < 1) {
       requestAnimationFrame(step);
@@ -133,28 +133,27 @@ function clamp(value, min = 0, max = 1) {
 function lerp(start, end, progress) {
   return start + (end - start) * progress;
 }
-function easeInOutCubic(t) {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-}
-let isAutoScrolling = false;
-let lastWheelTime = 0;
-let lastTriggeredBlockIndex = -1;
-function smoothViewportScrollBy(distance = 420, duration = 800) {
-  if (isAutoScrolling) return;
-  isAutoScrolling = true;
+let isProgrammaticScroll = false;
+const triggered = /* @__PURE__ */ new WeakSet();
+function smoothViewportScrollBy(distance = 200, duration = 500) {
+  if (isProgrammaticScroll) return;
+  isProgrammaticScroll = true;
   const startY = window.pageYOffset;
   const targetY = startY + distance;
   const startTime = performance.now();
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
   function step(now) {
     const elapsed = now - startTime;
     const progress = clamp(elapsed / duration);
     const eased = easeInOutCubic(progress);
-    const nextY = lerp(startY, targetY, eased);
-    window.scrollTo(0, nextY);
+    const currentY = lerp(startY, targetY, eased);
+    window.scrollTo(0, currentY);
     if (progress < 1) {
       requestAnimationFrame(step);
     } else {
-      isAutoScrolling = false;
+      isProgrammaticScroll = false;
     }
   }
   requestAnimationFrame(step);
@@ -179,23 +178,14 @@ function updateBlocks() {
       scaleX = lerp(1, 0.45, exitProgress);
       scaleY = lerp(1, 1.12, exitProgress);
       opacity = lerp(1, 0, exitProgress);
+      if (!triggered.has(block) && !isProgrammaticScroll && exitProgress >= 0.08 && exitProgress <= 0.16) {
+        triggered.add(block);
+        smoothViewportScrollBy(700, 800);
+      }
     }
     block.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`;
     block.style.opacity = opacity;
   });
-}
-function getActiveTriggerBlock() {
-  const vh = window.innerHeight;
-  for (let i = 0; i < blocks.length; i++) {
-    const rect = blocks[i].getBoundingClientRect();
-    if (rect.top <= 0 && rect.bottom > 0) {
-      const exitProgress = clamp(Math.abs(rect.top) / (vh * 0.75));
-      if (exitProgress >= 0.08 && exitProgress <= 0.18) {
-        return { index: i, block: blocks[i] };
-      }
-    }
-  }
-  return null;
 }
 let ticking = false;
 function requestUpdate() {
@@ -208,27 +198,6 @@ function requestUpdate() {
 }
 window.addEventListener("scroll", requestUpdate, { passive: true });
 window.addEventListener("resize", requestUpdate);
-window.addEventListener(
-  "wheel",
-  (e) => {
-    if (isAutoScrolling) {
-      e.preventDefault();
-      return;
-    }
-    if (e.deltaY <= 0) return;
-    const now = performance.now();
-    if (now - lastWheelTime < 350) return;
-    const active = getActiveTriggerBlock();
-    if (!active) return;
-    if (active.index !== lastTriggeredBlockIndex) {
-      e.preventDefault();
-      lastWheelTime = now;
-      lastTriggeredBlockIndex = active.index;
-      smoothViewportScrollBy(720, 800);
-    }
-  },
-  { passive: false }
-);
 updateBlocks();
 let formValidate = {
   getErrors(form) {
