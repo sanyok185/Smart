@@ -237,7 +237,7 @@ html {
   /* .about-block__item */
 }
 .block-about--first .item-about__content {
-  min-height: 6.5625rem;
+  min-height: 6.25rem;
 }
 .block-about--first .item-about {
   min-height: 18.75rem;
@@ -359,6 +359,12 @@ html.touch .item-about.is-open .item-about__image {
 }
 .why__text b {
   font-weight: 700;
+}
+
+.tariff {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .table-tariff {
@@ -759,6 +765,12 @@ textarea.input {
     gap: 1.25rem;
   }
 }@media (max-width: 90em) {
+  .item-about {
+    min-height: 15rem;
+  }
+  .item-about__content {
+    min-height: 4.375rem;
+  }
   .item-about__content {
     padding: 1.5625rem;
   }
@@ -799,16 +811,16 @@ textarea.input {
     transform: translateY(0);
   }
   .block-about--first .item-about__content {
-    min-height: 6.25rem;
+    min-height: 4.375rem;
   }
   .block-about--first .item-about {
-    min-height: 17.5rem;
+    min-height: 16.875rem;
   }
   .block-about--third .item-about {
-    min-height: 18.75rem;
+    min-height: 16.25rem;
   }
   .block-about--third .item-about__content {
-    min-height: 5.3125rem;
+    min-height: 4.375rem;
   }
 }@media (max-width: 68.75rem) {
   .block-about {
@@ -857,7 +869,7 @@ textarea.input {
   }
 }@media (width <= 47.99875em) {
   .connect__price {
-    width: 12.5rem;
+    width: 11.25rem;
   }
 }@media (max-width: 47.99875em) {
   .content-wrapper__track {
@@ -874,14 +886,17 @@ textarea.input {
     position: relative;
   }
   .block-about--first .item-about {
-    min-height: 16.25rem;
+    min-height: 13.75rem;
   }
   .block-about--third .item-about {
-    min-height: 16.875rem;
+    min-height: 13.75rem;
+  }
+  .item-about {
+    min-height: 13.75rem;
   }
   .item-about__content {
     padding: 1rem;
-    min-height: 6.25rem;
+    min-height: 3.75rem;
   }
   .table-tariff__row {
     grid-template-columns: 1.7fr 1fr 1fr;
@@ -923,16 +938,16 @@ textarea.input {
   }
 }@media (width <= 35em) {
   .block-about--first .item-about__content {
-    min-height: 4.375rem;
+    min-height: 3.125rem;
   }
   .block-about--first .item-about {
     min-height: 13.75rem;
   }
   .block-about--third .item-about {
-    min-height: 15rem;
+    min-height: 14.375rem;
   }
   .block-about--third .item-about__content {
-    min-height: 4.375rem;
+    min-height: 3.125rem;
   }
   .item-about {
     min-height: 13.125rem;
@@ -943,7 +958,7 @@ textarea.input {
   }
 }@media (width <= 33.75em) {
   .item-about__content {
-    min-height: 4.375rem;
+    min-height: 3.125rem;
   }
 }@media (max-width: 29.99875em) {
   .content-wrapper__track {
@@ -1094,7 +1109,7 @@ textarea.input {
     column-gap: clamp( 1.25rem , 0.92857142856875rem  +  1.6071428571vw , 2.375rem );
   }
   .header__title {
-    font-size: clamp( 2rem , 1.60714285714375rem  +  1.9642857143vw , 3.375rem );
+    font-size: clamp( 2rem , 1.64285714285625rem  +  1.7857142857vw , 3.25rem );
   }
   .header__logo {
     width: clamp( 11.25rem , 9.10714285714375rem  +  10.7142857143vw , 18.75rem );
@@ -1128,10 +1143,10 @@ textarea.input {
   }
 }@media (width > 20em) and (width <= 120em) {
   .block-about {
-    padding-top: clamp( 3.75rem , 2.25rem  +  7.5vw , 11.25rem );
+    padding-top: clamp( 3.75rem , 2.5rem  +  6.25vw , 10rem );
   }
   .block-about {
-    padding-bottom: clamp( 3.75rem , 2.25rem  +  7.5vw , 11.25rem );
+    padding-bottom: clamp( 3.75rem , 2.5rem  +  6.25vw , 10rem );
   }
   .block-about__header {
     margin-bottom: clamp( 1.5rem , 1rem  +  2.5vw , 4rem );
@@ -1206,7 +1221,7 @@ textarea.input {
   }
 }@media (width > 47.99875em) and (width <= 120em) {
   .connect__price {
-    width: clamp( 12.5rem , 5.00032551518125rem  +  15.6247287373vw , 23.75rem );
+    width: clamp( 11.25rem , 2.9170283502rem  +  17.3608097082vw , 23.75rem );
   }
 }@media (min-width: 61.99875em) {
   .why__content {
@@ -1239,7 +1254,7 @@ textarea.input {
     column-gap: 2.375rem;
   }
   .header__title {
-    font-size: 3.375rem;
+    font-size: 3.25rem;
   }
   .header__logo {
     width: 18.75rem;
@@ -1273,10 +1288,10 @@ textarea.input {
   }
 }@media (width > 120em) {
   .block-about {
-    padding-top: 11.25rem;
+    padding-top: 10rem;
   }
   .block-about {
-    padding-bottom: 11.25rem;
+    padding-bottom: 10rem;
   }
   .block-about__header {
     margin-bottom: 4rem;
