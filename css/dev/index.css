@@ -1146,10 +1146,10 @@ textarea.input {
   }
 }@media (width > 20em) and (width <= 120em) {
   .block-about {
-    padding-top: clamp( 2.5rem , 0.625rem  +  9.375vw , 11.875rem );
+    padding-top: clamp( 2.5rem , 0.5rem  +  10vw , 12.5rem );
   }
   .block-about {
-    padding-bottom: clamp( 2.5rem , 0.625rem  +  9.375vw , 11.875rem );
+    padding-bottom: clamp( 2.5rem , 0.5rem  +  10vw , 12.5rem );
   }
   .block-about__header {
     margin-bottom: clamp( 1.5rem , 1rem  +  2.5vw , 4rem );
@@ -1291,10 +1291,10 @@ textarea.input {
   }
 }@media (width > 120em) {
   .block-about {
-    padding-top: 11.875rem;
+    padding-top: 12.5rem;
   }
   .block-about {
-    padding-bottom: 11.875rem;
+    padding-bottom: 12.5rem;
   }
   .block-about__header {
     margin-bottom: 4rem;
