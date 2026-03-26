@@ -240,13 +240,13 @@ html {
   min-height: 6.25rem;
 }
 .block-about--first .item-about {
-  min-height: 18.75rem;
+  min-height: 17.5rem;
 }
 .block-about--third .block-about__items {
   grid-template-columns: repeat(3, 1fr);
 }
 .block-about--third .item-about {
-  min-height: 19.375rem;
+  min-height: 18.75rem;
 }
 .block-about--third .item-about__content {
   min-height: 5.9375rem;
@@ -1146,13 +1146,13 @@ textarea.input {
   }
 }@media (width > 20em) and (width <= 120em) {
   .block-about {
-    padding-top: clamp( 2.5rem , 0.5rem  +  10vw , 12.5rem );
+    padding-top: clamp( 2.5rem , 0.125rem  +  11.875vw , 14.375rem );
   }
   .block-about {
-    padding-bottom: clamp( 2.5rem , 0.5rem  +  10vw , 12.5rem );
+    padding-bottom: clamp( 2.5rem , 0.125rem  +  11.875vw , 14.375rem );
   }
   .block-about__header {
-    margin-bottom: clamp( 1.5rem , 1rem  +  2.5vw , 4rem );
+    margin-bottom: clamp( 1.5rem , 1.05rem  +  2.25vw , 3.75rem );
   }
   .block-about__title {
     font-size: clamp( 1.125rem , 1.05rem  +  0.375vw , 1.5rem );
@@ -1291,13 +1291,13 @@ textarea.input {
   }
 }@media (width > 120em) {
   .block-about {
-    padding-top: 12.5rem;
+    padding-top: 14.375rem;
   }
   .block-about {
-    padding-bottom: 12.5rem;
+    padding-bottom: 14.375rem;
   }
   .block-about__header {
-    margin-bottom: 4rem;
+    margin-bottom: 3.75rem;
   }
   .block-about__items {
     gap: 1.125rem;
