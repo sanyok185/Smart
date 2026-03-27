@@ -500,7 +500,10 @@ html.touch .item-about.is-open .item-about__image {
   /* .connect__price */
 }
 .connect__price {
-  width: 24.375rem;
+  flex-shrink: 0;
+}
+.connect__price img {
+  width: 100%;
 }
 .connect {
   /* .connect__form-wrapper */
@@ -783,9 +786,6 @@ textarea.input {
   .item-about__content {
     padding: 1.5625rem;
   }
-  .connect__price {
-    width: 21.875rem;
-  }
 }@media (width <= 87.5em) {
   .form-connect {
     grid-template-columns: 1fr 1fr 10rem;
@@ -793,20 +793,9 @@ textarea.input {
   .form-connect__input {
     padding: 1rem;
   }
-}@media (width <= 81.25em) {
-  .connect {
-    padding: 0;
-  }
-  .connect__row {
-    gap: 1.25rem;
-  }
 }@media (max-width: 81.25em) {
   .content-wrapper__track {
     width: 150%;
-  }
-}@media (width <= 78.125em) {
-  .connect__price {
-    width: 19.375rem;
   }
 }@media (width <= 68.75em) {
   .block-about__header {
@@ -841,9 +830,6 @@ textarea.input {
   }
   .block-about--third .item-about__content {
     min-height: 4.375rem;
-  }
-  .connect__price {
-    width: 17.5rem;
   }
 }@media (max-width: 68.75rem) {
   .block-about {
@@ -890,6 +876,10 @@ textarea.input {
   .content-wrapper__track {
     width: 240%;
   }
+}@media (width <= 47.99875em) {
+  .connect__price {
+    width: 11.25rem;
+  }
 }@media (max-width: 47.99875em) {
   .content-wrapper__track {
     width: 260%;
@@ -928,9 +918,6 @@ textarea.input {
   }
   .table-tariff__footer {
     padding: 1.25rem;
-  }
-  .connect__price {
-    width: 16.25rem;
   }
   .form-connect {
     font-size: 0.875rem;
@@ -985,9 +972,6 @@ textarea.input {
 }@media (max-width: 29.99875em) {
   .content-wrapper__track {
     width: 420%;
-  }
-  .connect__price {
-    width: 14.375rem;
   }
   .form-connect__input {
     padding: 1rem;
@@ -1247,6 +1231,10 @@ textarea.input {
   .footer__url {
     margin-right: -10%;
   }
+}@media (width > 47.99875em) and (width <= 120em) {
+  .connect__price {
+    width: clamp( 11.25rem , 1.25043402024375rem  +  20.8329716498vw , 26.25rem );
+  }
 }@media (min-width: 61.99875em) {
   .why__content {
     padding: 0 6.25rem;
@@ -1379,6 +1367,9 @@ textarea.input {
   }
   .connect__form-wrapper {
     padding: 2rem;
+  }
+  .connect__price {
+    width: 26.25rem;
   }
   .connect__success-title {
     font-size: 1.75rem;
