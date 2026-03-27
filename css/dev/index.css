@@ -1233,7 +1233,7 @@ textarea.input {
   }
 }@media (width > 47.99875em) and (width <= 120em) {
   .connect__price {
-    width: clamp( 11.25rem , 1.25043402024375rem  +  20.8329716498vw , 26.25rem );
+    width: clamp( 11.25rem , 1.66708260273125rem  +  19.9649311644vw , 25.625rem );
   }
 }@media (min-width: 61.99875em) {
   .why__content {
@@ -1369,7 +1369,7 @@ textarea.input {
     padding: 2rem;
   }
   .connect__price {
-    width: 26.25rem;
+    width: 25.625rem;
   }
   .connect__success-title {
     font-size: 1.75rem;
