@@ -870,10 +870,6 @@ textarea.input {
   .content-wrapper__track {
     width: 240%;
   }
-}@media (width <= 47.99875em) {
-  .connect__price {
-    width: 11.25rem;
-  }
 }@media (max-width: 47.99875em) {
   .content-wrapper__track {
     width: 260%;
@@ -962,6 +958,10 @@ textarea.input {
 }@media (width <= 33.75em) {
   .item-about__content {
     min-height: 3.125rem;
+  }
+}@media (width <= 30em) {
+  .connect__price {
+    width: 10.625rem;
   }
 }@media (max-width: 29.99875em) {
   .content-wrapper__track {
@@ -1218,16 +1218,16 @@ textarea.input {
   .connect__form-wrapper {
     padding: clamp( 1rem , 0.7572815534rem  +  1.0355987055vw , 2rem );
   }
+}@media (width > 30em) and (width <= 120em) {
+  .connect__price {
+    width: clamp( 10.625rem , 5.83333333333125rem  +  15.9722222222vw , 25rem );
+  }
 }@media (min-width: 47.99875em) {
   .block-about__title {
     margin: 0 12.5rem;
   }
   .footer__url {
     margin-right: -10%;
-  }
-}@media (width > 47.99875em) and (width <= 120em) {
-  .connect__price {
-    width: clamp( 11.25rem , 2.083731185225rem  +  19.096890679vw , 25rem );
   }
 }@media (min-width: 61.99875em) {
   .why__content {
